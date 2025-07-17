@@ -7,8 +7,10 @@ import re
 import sys
 
 
-
+"""Here i have used counters to count the number of positive,ngeative and zeros numbers are there in the 
+array so then i can use them to calculate the ratios and just print them out according to the question"""
 def plusMinus(arr):
+
    positive =0
    negative =0
    zero=0
