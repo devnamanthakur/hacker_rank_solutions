@@ -16,49 +16,58 @@ char** split_string(char*);
 
 int parse_int(char*);
 
-
-/*Here i have used counters to count the number of positive,ngeative and zeros numbers are there in the 
-array so then i can use them to calculate the ratios and just print them out according to the question*/
-
-void plusMinus(int arr_count, int* arr) {
-  
-    int positive=0;  //counter for positive numbers
-    int negative=0;  //counter for negative numbers
-    int zero=0;   //counter for zeros in the array
-   
-    for(int i=0;i< arr_count;i++){
-       
-        if(arr[i]>0){
-            positive++;
+/*Here I have created a seperate function to sort the given array into an ascending order 
+for which the reasson is if yo simply have to find out the min and max just sort them in an ascending order
+so that the sum of first four elements will be the minimum and and last four elements will be the maximum.SIMPLE!*/
+void sort(int arr_count,int* arr){
+    //Here i have used the bubble sorting to sort the array in ascending order
+    int temp;
+   for(int i=0;i<arr_count-1;i++){
+    //outer loop
+    for(int j=0;j<arr_count-1-i;j++){
+        //inner loop(core logic)
+        if(arr[j]>arr[j+1]){
+            temp=arr[j];
+            arr[j]=arr[j+1];
+            arr[j+1]=temp;
         }
-        else if(arr[i]<0){
-            negative++;
-        }
-        else{
-            zero++;
-        }
-  }
-        printf("%.6f\n",(double)positive/arr_count); //calculation
-        printf("%.6f\n",(double)negative/arr_count);
-        printf("%.6f\n",(double)zero/arr_count);  
     }
+  }
+}
 
+
+void miniMaxSum(int arr_count, int* arr) {
+    long long min=0;  //initializing min
+    long long  max=0;  //initializing max
+    /*If you are wondering why have I used long long an not int is because when you store a very large number like 12355523674558
+    ,int cannot store that number and your test case will fail while submiting your code even if your sample test gets approved */
+
+    sort(arr_count,arr);  //function call
+    
+    for(int i=0;i<arr_count-1;i++){
+        min=min+arr[i];  //calculating min
+    }
+    
+    for(int i=1;i<arr_count;i++){
+        max=max+arr[i]; //calculating max
+    }
+  printf("%lld %lld",min,max);
+}
 
 int main()
 {
-    int n = parse_int(ltrim(rtrim(readline())));
 
     char** arr_temp = split_string(rtrim(readline()));
 
-    int* arr = malloc(n * sizeof(int));
+    int* arr = malloc(5 * sizeof(int));
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < 5; i++) {
         int arr_item = parse_int(*(arr_temp + i));
 
         *(arr + i) = arr_item;
     }
 
-    plusMinus(n, arr);
+    miniMaxSum(5, arr);
 
     return 0;
 }
